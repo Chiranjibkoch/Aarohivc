@@ -5,7 +5,6 @@ import textwrap
 import aiofiles
 import aiohttp
 import numpy as np
-from back import files
 
 from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter, ImageFont
 from youtubesearchpython.__future__ import VideosSearch
@@ -33,8 +32,8 @@ def add_corners(im):
 
 
 async def gen_thumb(videoid, user_id):
-    if os.path.isfile(f"cache/{videoid}_{user_id}_{anime}.png"):
-        return f"cache/{videoid}_{user_id}_{anime}.png"
+    if os.path.isfile(f"cache/{videoid}_{user_id}.png"):
+        return f"cache/{videoid}_{user_id}.png"
     url = f"https://www.youtube.com/watch?v={videoid}"
     try:
         results = VideosSearch(url, limit=1)
@@ -83,7 +82,7 @@ async def gen_thumb(videoid, user_id):
         x = f.resize((107, 107))
 
         youtube = Image.open(f"cache/thumb{videoid}.png")
-        bg = Image.open(f"back/{anime}.PNG")
+        bg = Image.open(f"assets/AdityaX.png")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
         background = image2.filter(filter=ImageFilter.BoxBlur(30))
@@ -126,7 +125,7 @@ async def gen_thumb(videoid, user_id):
         try:
             draw.text(
                 (450, 25),
-                f"STARTED PLAYING",
+                f"",
                 fill="white",
                 stroke_width=3,
                 stroke_fill="grey",
@@ -173,8 +172,8 @@ async def gen_thumb(videoid, user_id):
 
 
 async def gen_qthumb(videoid, user_id):
-    if os.path.isfile(f"cache/que{videoid}_{user_id}_{anime}.png"):
-        return f"cache/que{videoid}_{user_id}_{anime}.png"
+    if os.path.isfile(f"cache/que{videoid}_{user_id}.png"):
+        return f"cache/que{videoid}_{user_id}.png"
     url = f"https://www.youtube.com/watch?v={videoid}"
     try:
         results = VideosSearch(url, limit=1)
@@ -223,7 +222,7 @@ async def gen_qthumb(videoid, user_id):
         x = f.resize((107, 107))
 
         youtube = Image.open(f"cache/thumb{videoid}.png")
-        bg = Image.open(f"back/{anime}.PNG")
+        bg = Image.open(f"assets/AdityaX.png")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
         background = image2.filter(filter=ImageFilter.BoxBlur(30))
@@ -306,9 +305,9 @@ async def gen_qthumb(videoid, user_id):
             os.remove(f"cache/thumb{videoid}.png")
         except:
             pass
-        file = f"cache/que{videoid}_{user_id}_{anime}.png"
-        background.save(f"cache/que{videoid}_{user_id}_{anime}.png")
-        return f"cache/que{videoid}_{user_id}_{anime}.png"
+        file = f"cache/que{videoid}_{user_id}.png"
+        background.save(f"cache/que{videoid}_{user_id}.png")
+        return f"cache/que{videoid}_{user_id}.png"
     except Exception as e:
         print(e)
         return YOUTUBE_IMG_URL
